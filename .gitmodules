@@ -1,0 +1,12 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/2023-DA-PTT/ptt-frontend
+	branch = main
+[submodule "backend"]
+	path = backend
+	url = https://github.com/2023-DA-PTT/ptt-backend
+	branch = main
+[submodule "client"]
+	path = client
+	url = https://github.com/2023-DA-PTT/ptt-client
+	branch = main
