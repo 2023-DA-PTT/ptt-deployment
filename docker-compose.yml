@@ -1,0 +1,41 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 80:4200
+    container_name: ptt-frontend
+    volumes:
+       - ./frontend:/usr/src/app
+       - /usr/src/app/node_modules
+  backend:
+    build:
+      context: ./backend
+      dockerfile: src/main/docker/Dockerfile.dev
+    ports:
+      - 8080:8080
+      - 5005:5005
+    container_name: ptt-backend
+    volumes:
+       - ./backend:/app
+       - ~/.m2:/home/jboss/.m2
+       - ./rasa:/rasa
+  postgres:
+    image: postgres:latest
+    container_name: ptt-postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    container_name: ptt-adminer
+    depends_on: 
+      - postgres
+    ports:
+      - 8081:8080
