@@ -26,14 +26,43 @@ type: kubernetes.io/dockerconfigjson
 apiVersion: v1
 metadata:
   name: dockerconfigjson-github-com
+  namespace: ptt
   labels:
     app: frontend-git-pat
 data:
   .dockerconfigjson: <ghcr-json-key>
 ```
 
-Finally, run `kubectl apply -f k8s-ghcr-credentials.yml`
+Finally, run `kubectl create namespace ptt && kubectl apply -f k8s-ghcr-credentials.yml`
+
+### Setting up TLS Encryption keys
+
+Run following command to download letsencrypt for traefik ingress controller:
+
+`kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.2/cert-manager.yaml `
+
+Create a file called `k8s-cert.yml` and replace `<email>` with your email
+
+```yml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  namespace: cert-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: <email>
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+```
+
+Execute `kubectl apply -f k8s-cert.yml`
 
 ## Deployment
 
-Deploy the k8s Performance Testing Tool by doing `kubectl apply -f k8s-prod.yml`
+Deploy the k8s Performance Testing Tool by doing `kubectl apply -f frontend/k8s && kubectl apply -f backend/k8s`
