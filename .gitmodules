@@ -10,3 +10,7 @@
 	path = client
 	url = https://github.com/2023-DA-PTT/ptt-client
 	branch = main
+[submodule "test-env"]
+	path = test-env
+	url = https://github.com/2023-DA-PTT/ptt-test-environment
+	branch = main
