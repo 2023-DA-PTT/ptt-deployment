@@ -4,15 +4,15 @@ metadata:
   name: ptt-deployment
 build:
   artifacts:
-  - image: 2023-da-ptt/ptt-backend
+  - image: ghcr.io/2023-da-ptt/ptt-backend
     context: backend
     buildpacks:
       builder: codejive/buildpacks-quarkus-builder:jvm
-  - image: 2023-da-ptt/ptt-frontend
+  - image: ghcr.io/2023-da-ptt/ptt-frontend
     context: frontend
     buildpacks:
       builder: gcr.io/buildpacks/builder:v1
-  - image: 2023-da-ptt/ptt-test-environment
+  - image: ghcr.io/2023-da-ptt/ptt-test-environment
     context: test-env
     buildpacks:
       builder: codejive/buildpacks-quarkus-builder:jvm
