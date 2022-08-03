@@ -6,27 +6,45 @@ build:
   artifacts:
   - image: ghcr.io/2023-da-ptt/ptt-backend
     context: backend
-    buildpacks:
-      builder: codejive/buildpacks-quarkus-builder:jvm
+    docker:
+      dockerfile: src/main/docker/Dockerfile.jvm
   - image: ghcr.io/2023-da-ptt/ptt-frontend
     context: frontend
-    buildpacks:
-      builder: gcr.io/buildpacks/builder:v1
+    docker:
+      dockerfile: Dockerfile.skaffold
   - image: ghcr.io/2023-da-ptt/ptt-test-environment
     context: test-env
-    buildpacks:
-      builder: codejive/buildpacks-quarkus-builder:jvm
+    docker:
+      dockerfile: src/main/docker/Dockerfile.jvm
 deploy:
   kubectl:
     manifests:
     - backend/k8s/deployment.yml
-    - backend/k8s/ingress.yml
     - backend/k8s/postgres-persistent-volume.yml
     - backend/k8s/postgres-secret.yml
     - backend/k8s/service.yml
     - frontend/k8s/deployment.yml
-    - frontend/k8s/ingress.yml
     - frontend/k8s/service.yml
     - test-env/k8s/deployment.yml
-    - test-env/k8s/ingress.yml
     - test-env/k8s/service.yml
+portForward:
+- resourceType: service
+  resourceName: ptt-frontend-service
+  namespace: ptt
+  port: 80
+  localPort: 8080
+- resourceType: service
+  resourceName: ptt-backend-service
+  namespace: ptt
+  port: 8080
+  localPort: 8081
+- resourceType: service
+  resourceName: ptt-mqtt-service
+  namespace: ptt
+  port: 1883
+  localPort: 1883
+- resourceType: service
+  resourceName: ptt-mqtt-service
+  namespace: ptt
+  port: 9001
+  localPort: 9001
