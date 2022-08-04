@@ -3,6 +3,8 @@ kind: Config
 metadata:
   name: ptt-deployment
 build:
+  tagPolicy:
+    sha256: {}
   artifacts:
   - image: ghcr.io/2023-da-ptt/ptt-backend
     context: backend
@@ -17,13 +19,7 @@ build:
   - image: ghcr.io/2023-da-ptt/ptt-client
     context: client
     docker:
-      dockerfile: src/main/docker/Dockerfile.dev
-    sync:
-      manual:
-       - src: 'src/**/*.java'
-         dest: /usr/src/app
-       - src: 'pom.xml'
-         dest: /usr/src/app
+      dockerfile: src/main/docker/Dockerfile.jvm
   - image: ghcr.io/2023-da-ptt/ptt-frontend
     context: frontend
     docker:
@@ -35,6 +31,7 @@ build:
 deploy:
   kubectl:
     manifests:
+    - backend/k8s/mosquitto-config.yml
     - backend/k8s/deployment.yml
     - backend/k8s/postgres-persistent-volume.yml
     - backend/k8s/postgres-secret.yml
