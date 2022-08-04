@@ -13,7 +13,7 @@ base64 encode following String by replacing the `<token>` and `<username>` with 
 Copy the base64-encoded string and replace it with `<placeholder>`
 
 ```json
-{"auths":{"ghcr.io":{"auth":"<placeholder>"}}}
+'{"auths":{"ghcr.io":{"auth":"cHR0YXV0b21hdGlvbjpnaHBfVm9tVkUxZUlyTEV0Mk9XdG43c3ptZ0EyMlRGUzF3M3NLaFdp"}}}'
 ```
 
 Encode this whole String again and you have your ghcr-json-key.
