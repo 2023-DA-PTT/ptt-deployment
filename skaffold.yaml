@@ -12,7 +12,7 @@ build:
       dockerfile: src/main/docker/Dockerfile.dev
     sync:
       manual:
-       - src: 'src/**/*.java'
+       - src: 'src/**/*'
          dest: /usr/src/app
        - src: 'pom.xml'
          dest: /usr/src/app
@@ -44,6 +44,7 @@ deploy:
     - backend/k8s/postgres-persistent-volume.yml
     - backend/k8s/postgres-secret.yml
     - backend/k8s/service.yml
+    - backend/k8s/serviceaccount.yml
     - frontend/k8s/deployment.yml
     - frontend/k8s/service.yml
     - test-env/k8s/deployment.yml
