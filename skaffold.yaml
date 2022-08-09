@@ -23,7 +23,15 @@ build:
   - image: ghcr.io/2023-da-ptt/ptt-frontend
     context: frontend
     docker:
-      dockerfile: Dockerfile.skaffold
+      dockerfile: Dockerfile.dev
+    sync:
+      manual:
+       - src: 'src/**/*'
+         dest: /usr/src/app
+       - src: '*.js'
+         dest: /usr/src/app
+       - src: '*.json'
+         dest: /usr/src/app
   - image: ghcr.io/2023-da-ptt/ptt-test-environment
     context: test-env
     docker:
