@@ -53,6 +53,11 @@ portForward:
   port: 8080
   localPort: 8081
 - resourceType: service
+  resourceName: ptt-test-environment-service
+  namespace: ptt
+  port: 8080
+  localPort: 8082
+- resourceType: service
   resourceName: ptt-mqtt-service
   namespace: ptt
   port: 1883
