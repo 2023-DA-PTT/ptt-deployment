@@ -37,18 +37,26 @@ build:
     docker:
       dockerfile: src/main/docker/Dockerfile.jvm
 deploy:
-  kubectl:
-    manifests:
-    - backend/k8s/mosquitto-config.yml
-    - backend/k8s/deployment.yml
-    - backend/k8s/postgres-persistent-volume.yml
-    - backend/k8s/postgres-secret.yml
-    - backend/k8s/service.yml
-    - backend/k8s/serviceaccount.yml
-    - frontend/k8s/deployment.yml
-    - frontend/k8s/service.yml
-    - test-env/k8s/deployment.yml
-    - test-env/k8s/service.yml
+  helm:
+    releases:
+    - name:	backend
+      chartPath: ./backend/helm
+      artifactOverrides:
+        image: ghcr.io/2023-da-ptt/ptt-backend
+      imageStrategy:
+        helm: {}
+    - name:	frontend
+      chartPath: ./frontend/helm
+      artifactOverrides:
+        image: ghcr.io/2023-da-ptt/ptt-frontend
+      imageStrategy:
+        helm: {}
+    - name:	test-env
+      chartPath: ./test-env/helm
+      artifactOverrides:
+        image: ghcr.io/2023-da-ptt/ptt-test-environment
+      imageStrategy:
+        helm: {}
 portForward:
 - resourceType: service
   resourceName: ptt-frontend-service
