@@ -6,6 +6,7 @@
 
 base64 encode following String by replacing the `<token>` and `<username>` with your github-credentials.
 
+make sure to not include any newline use `echo -n 'string'| base64` to encrypt the file.
 ```
 <username>:<token>
 ```

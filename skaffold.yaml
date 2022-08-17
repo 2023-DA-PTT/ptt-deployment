@@ -26,16 +26,18 @@ build:
       dockerfile: Dockerfile.dev
     sync:
       manual:
-       - src: 'src/**/*'
-         dest: /usr/src/app
-       - src: '*.js'
-         dest: /usr/src/app
-       - src: '*.json'
+       - src: '**/*'
          dest: /usr/src/app
   - image: ghcr.io/2023-da-ptt/ptt-test-environment
     context: test-env
     docker:
       dockerfile: src/main/docker/Dockerfile.jvm
+    sync:
+      manual:
+       - src: 'src/**/*'
+         dest: /usr/src/app
+       - src: 'pom.xml'
+         dest: /usr/src/app
 deploy:
   helm:
     releases:
