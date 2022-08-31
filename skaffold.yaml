@@ -70,6 +70,16 @@ portForward:
   namespace: ptt
   port: 8080
   localPort: 8081
+- resourceType: deployment
+  resourceName: ptt-backend
+  namespace: ptt
+  port: 5005
+  localPort: 5005
+- resourceType: deployment
+  resourceName: ptt-backend
+  namespace: ptt
+  port: 5432
+  localPort: 5432
 - resourceType: service
   resourceName: ptt-test-environment-service
   namespace: ptt
