@@ -19,7 +19,7 @@ build:
   - image: ghcr.io/2023-da-ptt/ptt-client
     context: client
     docker:
-      dockerfile: src/main/docker/Dockerfile.jvm
+      dockerfile: Dockerfile.jvm
   - image: ghcr.io/2023-da-ptt/ptt-frontend
     context: frontend
     docker:
@@ -45,20 +45,25 @@ deploy:
       chartPath: ./backend/helm
       artifactOverrides:
         image: ghcr.io/2023-da-ptt/ptt-backend
+      overrides:
+        volumes: false
       imageStrategy:
         helm: {}
+      namespace: ptt
     - name:	frontend
       chartPath: ./frontend/helm
       artifactOverrides:
         image: ghcr.io/2023-da-ptt/ptt-frontend
       imageStrategy:
         helm: {}
+      namespace: ptt
     - name:	test-env
       chartPath: ./test-env/helm
       artifactOverrides:
         image: ghcr.io/2023-da-ptt/ptt-test-environment
       imageStrategy:
         helm: {}
+      namespace: ptt
 portForward:
 - resourceType: service
   resourceName: ptt-frontend-service
@@ -75,8 +80,8 @@ portForward:
   namespace: ptt
   port: 5005
   localPort: 5005
-- resourceType: deployment
-  resourceName: ptt-backend
+- resourceType: service
+  resourceName: ptt-postgres-service
   namespace: ptt
   port: 5432
   localPort: 5432
