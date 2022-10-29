@@ -47,6 +47,10 @@ deploy:
         image: ghcr.io/2023-da-ptt/ptt-backend
       overrides:
         volumes: false
+        keycloak:
+          enabled: false
+        image:
+          pullPolicy: IfNotPresent
       imageStrategy:
         helm: {}
       namespace: ptt
@@ -54,6 +58,9 @@ deploy:
       chartPath: ./frontend/helm
       artifactOverrides:
         image: ghcr.io/2023-da-ptt/ptt-frontend
+      overrides:
+        image:
+          pullPolicy: IfNotPresent
       imageStrategy:
         helm: {}
       namespace: ptt
@@ -61,6 +68,9 @@ deploy:
       chartPath: ./test-env/helm
       artifactOverrides:
         image: ghcr.io/2023-da-ptt/ptt-test-environment
+      overrides:
+        image:
+          pullPolicy: IfNotPresent
       imageStrategy:
         helm: {}
       namespace: ptt
