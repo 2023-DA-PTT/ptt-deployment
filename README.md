@@ -1,9 +1,9 @@
-# ptt-deployment
-Parent-Repository for the Performance Testing Tool.
-
+# Performance Testing Tool
 The Performance Testing Tool is a Kubernetes-native web application designed for conducting load tests on HTTP servers. It offers full flexibility in configuring the scan target, HTTP requests, and the overall load to be generated. Test results are visualized through clear and intuitive graphs.
 
 Load testing is performed by launching a configurable number of worker pods within a Kubernetes cluster. These workers send parallel HTTP requests to the target server and collect metadata such as response times for further analysis.
+
+The Performance Testing Tool was implemented as part of our Diploma Thesis at the HTL Leonding in 2022-2023.
 
 ## How-To
 
