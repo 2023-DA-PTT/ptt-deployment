@@ -39,8 +39,7 @@ To run the Performance Testing Tool, a Kubernetes cluster is required. It can be
 
 Additionally, ensure that Docker's built-in Kubernetes cluster is enabled.
 
-Once the environment is set up, navigate to the project’s root directory and run the following Skaffold command to build and deploy the Performance Testing Tool locally.
-
+After setting up the environment, clone this repository using the `--recurse-submodules` option to ensure all git submodule contents are downloaded. Then, navigate to the project’s root directory and run the following Skaffold command to build and deploy the Performance Testing Tool locally.
 ```bash
 skaffold dev --trigger=manual
 ```
