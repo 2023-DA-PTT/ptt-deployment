@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ptt-keycloak
+  namespace: ptt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ptt-keycloak
+  template:
+    metadata:
+      labels:
+        app: ptt-keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:24.0.1
+          args: ["start-dev", "--import-realm"]
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: admin
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: admin
+            - name: KEYCLOAK_IMPORT
+              value: /opt/keycloak/data/import/realm-export.json
+          volumeMounts:
+            - name: realm-volume
+              mountPath: /opt/keycloak/data/import
+      volumes:
+        - name: realm-volume
+          configMap:
+            name: ptt-keycloak-realm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ptt-keycloak-realm
+  namespace: ptt
+data:
+  realm-export.json: |
+    {
+      "realm": "ptt-realm",
+      "registrationAllowed": true,
+      "enabled": true,
+      "clients": [
+        {
+          "clientId": "backend-service",
+          "secret": "E6Ghz9DEfTVf5Pga3aWQ6cvwDeOGxZhv",
+          "enabled": true,
+          "protocol": "openid-connect",
+          "publicClient": false,
+          "redirectUris": ["*"],
+          "standardFlowEnabled": true,
+          "implicitFlowEnabled": true,
+          "directAccessGrantsEnabled": true,
+          "serviceAccountsEnabled": true,
+          "webOrigins": ["*"]
+        }
+      ]
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ptt-keycloak-service
+  namespace: ptt
+spec:
+  selector:
+    app: ptt-keycloak
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

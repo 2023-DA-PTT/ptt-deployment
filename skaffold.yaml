@@ -39,6 +39,9 @@ build:
        - src: 'pom.xml'
          dest: /usr/src/app
 deploy:
+  kubectl:
+    manifests:
+      - k8s/keycloak.yml
   helm:
     releases:
     - name:	backend
@@ -104,3 +107,8 @@ portForward:
   namespace: ptt
   port: 9001
   localPort: 9001
+- resourceType: service
+  resourceName: ptt-keycloak-service
+  namespace: ptt
+  port: 8080
+  localPort: 8083
