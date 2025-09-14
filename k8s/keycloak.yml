@@ -59,6 +59,22 @@ data:
           "serviceAccountsEnabled": true,
           "webOrigins": ["*"]
         }
+      ],
+      "users": [
+        {
+          "id": "842d65fe-7ddb-45bf-9d72-6360691ff196",
+          "username": "admin",
+          "enabled": true,
+          "email": "admin@example.com",
+          "emailVerified": true,
+          "credentials": [
+            {
+              "type": "password",
+              "value": "admin",
+              "temporary": false
+            }
+          ]
+        }
       ]
     }
 ---
